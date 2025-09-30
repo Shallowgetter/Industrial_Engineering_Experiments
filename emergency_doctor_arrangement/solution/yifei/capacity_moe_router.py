@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Mixture-of-Experts (MOE) capacity planner for night surge at 6–7.
 Decisions per day:
