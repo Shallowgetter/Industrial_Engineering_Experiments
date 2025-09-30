@@ -8,18 +8,14 @@ def solve_exact(durations, transport, trans_time, time_limit_s=30):
     B = [0,1]
     S = [1,2,3]
     n = len({k[0] for k in durations.keys()})
-    # 时间上界（保守估计）
+    # horizon upper bound
     sum_all = sum(durations[(i,s,b)] for i in range(n) for s in S for b in B)
     sum_tr = sum(max(transport[(i,b)] for b in B) for i in range(n))
     horizon = sum_all + sum_tr + 1000
 
     model = cp_model.CpModel()
 
-    # 变量：分配、时间、interval
-    # x[(i,s,b)]：订单 i 的阶段 s 是否在基地 b 执行（presence / assignment）
-    # st/ed：对应 interval 的开始/结束时间
-    # itv：可选 interval（presence = x）
-    # tr_*：运输的开始/结束/interval（presence = x[(i,3,b)]）
+    # variables
     x = {}
     st = {}; ed = {}; itv = {}
     tr_st = {}; tr_ed = {}; tr_itv = {}
@@ -38,13 +34,12 @@ def solve_exact(durations, transport, trans_time, time_limit_s=30):
             tr_itv[(i,b)] = model.NewOptionalIntervalVar(tr_st[(i,b)], transport[(i,b)], tr_ed[(i,b)], x[(i,3,b)],
                                                          f"tr_itv_i{i}_b{b}")
 
-    # 约束：每个阶段恰好在一个基地执行（one-hot）
+    # each stage executed once
     for i in range(n):
         for s in S:
             model.Add(sum(x[(i,s,b)] for b in B) == 1)
 
-    # 约束：工序内部前后依赖（含跨基地运输时间）
-    # S1 -> S2, S2 -> S3；运输开始 >= 冷轧结束
+    # precedence within job
     for i in range(n):
         # S1->S2
         for b1 in B:
@@ -54,23 +49,20 @@ def solve_exact(durations, transport, trans_time, time_limit_s=30):
         for b1 in B:
             for b2 in B:
                 model.Add(ed[(i,2,b1)] + trans_time[b1][b2] <= st[(i,3,b2)]).OnlyEnforceIf([x[(i,2,b1)], x[(i,3,b2)]])
-        # 运输不能早于冷轧结束
+        # transport start >= cold end
         for b in B:
             model.Add(tr_st[(i,b)] >= ed[(i,3,b)]).OnlyEnforceIf(x[(i,3,b)])
 
-    # 约束：每个产线（基地+阶段）一次只能做一个任务
-    # 使用 AddNoOverlap 保证同资源上的 interval 不重叠
+    # machine no-overlap per base & stage
     for b in B:
         for s in S:
             model.AddNoOverlap([itv[(i,s,b)] for i in range(n)])
-    # 运输资源在每个基地也互斥
+    # transport resource per base no-overlap (redundant but useful)
     for b in B:
         model.AddNoOverlap([tr_itv[(i,b)] for i in range(n)])
 
-    # 顺序相关：冷轧顺序与运输顺序一致，并实现“即时发车”逻辑
-    # 为冷轧在每个基地的每对订单建立互斥的 order 布尔（o_ij / o_ji）
-    # 并使用 g_ij 比较来实现 tr_start = max(cold_end, prev_tr_end) 的分段等式
-    order = {}  # order[(b,i,j)] 表示在基地 b 上 i 在 j 之前
+    # order variables: enforce cold-order and transport-order equality and immediate dispatch
+    order = {}  # order[(b,i,j)] when i before j on base b
     for b in B:
         for i in range(n):
             for j in range(i+1, n):
@@ -79,77 +71,37 @@ def solve_exact(durations, transport, trans_time, time_limit_s=30):
                 o_ji = model.NewBoolVar(f"ord_b{b}_i{j}_j{i}")
                 order[(b,i,j)] = o_ij
                 order[(b,j,i)] = o_ji
-                # 如果两者都存在，则二者中恰有一个为真（确定先后）
+                # if both present, exactly one ordering
                 model.Add(o_ij + o_ji == 1).OnlyEnforceIf(pres_pair)
-                # 根据 order 关联冷轧结束时间（保证序列一致性）
+                # link to cold end times
                 model.Add(ed[(i,3,b)] <= ed[(j,3,b)]).OnlyEnforceIf([o_ij] + pres_pair)
                 model.Add(ed[(j,3,b)] <= ed[(i,3,b)]).OnlyEnforceIf([o_ji] + pres_pair)
 
-                # g_ij 用于判断 ed_j >= tr_ed_i，从而分支 tr_start_j 的取值
+                # now immediate transport relation: need bool g_ij representing ed_j >= tr_ed_i
                 g_ij = model.NewBoolVar(f"g_b{b}_i{i}_j{j}")
+                # encode ed_j >= tr_ed_i  as two reified constraints
                 model.Add(ed[(j,3,b)] >= tr_ed[(i,b)]).OnlyEnforceIf(g_ij)
                 model.Add(ed[(j,3,b)] <= tr_ed[(i,b)] - 1).OnlyEnforceIf(g_ij.Not())
 
-                # 若 i 在 j 之前且 ed_j >= tr_ed_i => tr_start_j == ed_j
+                # if i before j and g_ij true => tr_start_j == ed_j
                 model.Add(tr_st[(j,b)] == ed[(j,3,b)]).OnlyEnforceIf([o_ij, g_ij, x[(j,3,b)]])
-                # 若 i 在 j 之前且 ed_j < tr_ed_i  => tr_start_j == tr_end_i（须等前车运输结束）
+                # if i before j and g_ij false => tr_start_j == tr_end_i
                 model.Add(tr_st[(j,b)] == tr_ed[(i,b)]).OnlyEnforceIf([o_ij, g_ij.Not(), x[(j,3,b)], x[(i,3,b)]])
-
-                # 对称地为 j 在 i 之前的情形建立相同逻辑
+                # symmetric: need g_ji for opposite comparison
                 g_ji = model.NewBoolVar(f"g_b{b}_i{j}_j{i}")
                 model.Add(ed[(i,3,b)] >= tr_ed[(j,b)]).OnlyEnforceIf(g_ji)
                 model.Add(ed[(i,3,b)] <= tr_ed[(j,b)] - 1).OnlyEnforceIf(g_ji.Not())
                 model.Add(tr_st[(i,b)] == ed[(i,3,b)]).OnlyEnforceIf([o_ji, g_ji, x[(i,3,b)]])
                 model.Add(tr_st[(i,b)] == tr_ed[(j,b)]).OnlyEnforceIf([o_ji, g_ji.Not(), x[(i,3,b)], x[(j,3,b)]])
 
-    # 强制 S1 与 S2 在同一基地的相对顺序一致
-    # 对每对订单在同一基地同时做 S1 和 S2 时，创建 order 布尔并绑定 S1 与 S2 的先后
-    for b in B:
-        for i in range(n):
-            for j in range(i+1, n):
-                # 仅在两订单在该基地同时做 S1 和 S2 时生效
-                pres_s1s2 = [x[(i,1,b)], x[(j,1,b)], x[(i,2,b)], x[(j,2,b)]]
-                o12_ij = model.NewBoolVar(f"ord12_b{b}_i{i}_j{j}")
-                o12_ji = model.NewBoolVar(f"ord12_b{b}_i{j}_j{i}")
-                model.Add(o12_ij + o12_ji == 1).OnlyEnforceIf(pres_s1s2)
-                # 若 o12_ij 为真，则 i 在 S1 和 S2 上均先于 j
-                model.Add(ed[(i,1,b)] <= st[(j,1,b)]).OnlyEnforceIf([o12_ij] + pres_s1s2)
-                model.Add(ed[(i,2,b)] <= st[(j,2,b)]).OnlyEnforceIf([o12_ij] + pres_s1s2)
-                # 对称
-                model.Add(ed[(j,1,b)] <= st[(i,1,b)]).OnlyEnforceIf([o12_ji] + pres_s1s2)
-                model.Add(ed[(j,2,b)] <= st[(i,2,b)]).OnlyEnforceIf([o12_ji] + pres_s1s2)
-
-    # 明确强制“首个下线的订单必须立刻发车”
-    # 创建 is_first 布尔：当且仅当该订单在基地 b 且无前驱（在 cold-order 中）
-    # 若 is_first 则强制 tr_start == cold_end
-    for b in B:
-        for j in range(n):
-            is_first = model.NewBoolVar(f"is_first_b{b}_j{j}")
-            preds = []
-            for k in range(n):
-                if k == j: continue
-                preds.append(order.get((b,k,j), None))
-            preds = [p for p in preds if p is not None]
-            if preds:
-                # is_first == 1 <=> sum(preds) == 0
-                model.Add(sum(preds) == 0).OnlyEnforceIf(is_first)
-                model.Add(sum(preds) >= 1).OnlyEnforceIf(is_first.Not())
-                # 若未在该基地做冷轧，则 is_first 必为 0
-                model.Add(is_first == 0).OnlyEnforceIf(x[(j,3,b)].Not())
-            else:
-                # 若没有 pairwise order 变量（极端情况），把 is_first 与 presence 绑定
-                model.Add(is_first == x[(j,3,b)])
-            # 若是首个下线且在该基地执行冷轧，则运输必须立即开始
-            model.Add(tr_st[(j,b)] == ed[(j,3,b)]).OnlyEnforceIf([is_first, x[(j,3,b)]])
-
-    # 目标：最小化所有订单运输完成时间的最大值（makespan）
+    # makespan and objective
     makespan = model.NewIntVar(0, horizon, "makespan")
     for i in range(n):
         for b in B:
             model.Add(makespan >= tr_ed[(i,b)]).OnlyEnforceIf(x[(i,3,b)])
     model.Minimize(makespan)
 
-    # 求解参数与求解
+    # solver
     solver = cp_model.CpSolver()
     solver.parameters.max_time_in_seconds = time_limit_s
     solver.parameters.num_search_workers = max(1, os.cpu_count() - 1 or 1)
@@ -161,6 +113,7 @@ def solve_exact(durations, transport, trans_time, time_limit_s=30):
         print("Exact solve status:", solver.StatusName(status), "makespan=", solver.Value(makespan))
         sol = {}
         for i in range(n):
+            # find assigned bases and intervals
             sol[i] = {}
             for s in S:
                 for b in B:
@@ -168,6 +121,7 @@ def solve_exact(durations, transport, trans_time, time_limit_s=30):
                         sol[i][f"s{s}_base"] = b
                         sol[i][f"s{s}_st"] = solver.Value(st[(i,s,b)])
                         sol[i][f"s{s}_ed"] = solver.Value(ed[(i,s,b)])
+            # transport
             for b in B:
                 if solver.Value(x[(i,3,b)]) == 1:
                     sol[i]['tr_base'] = b
@@ -177,7 +131,6 @@ def solve_exact(durations, transport, trans_time, time_limit_s=30):
     else:
         print("Exact solver status:", solver.StatusName(status))
         return False, None, None
-
     
 def read_excel_data(path, sheet_name=0):
     df = pd.read_excel(path, sheet_name=sheet_name)
@@ -303,6 +256,7 @@ import matplotlib.patches as mpatches
 plt.rcParams['font.sans-serif'] = ['SimHei']
 plt.rcParams['axes.unicode_minus'] = False
 
+# 甘特图可视化
 def plot_gantt_from_solution(xlsx_path, sheet_name=0,
                              col_map=None,
                              figsize=(14, 6),
@@ -491,3 +445,7 @@ if __name__ == "__main__":
     df10 = main(xlsx_path, sheet_idx='数据1', mode='exact', time_limit_s=60)
 
     plot_gantt_from_solution("steel_fabucation_arrangement\solution\lirui\schedule_sol_sheet_数据1_exact.xlsx", sheet_name=0, savepath="steel_fabucation_arrangement\solution\lirui\gantt_10jobs.png")
+
+    df100 = main(xlsx_path100, sheet_idx='数据2', mode='exact', time_limit_s=360)
+
+    plot_gantt_from_solution("steel_fabucation_arrangement\solution\lirui\schedule_sol_sheet_数据2_exact.xlsx", sheet_name=0, savepath="steel_fabucation_arrangement\solution\lirui\gantt_100jobs.png")
