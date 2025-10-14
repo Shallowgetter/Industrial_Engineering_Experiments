@@ -9,6 +9,7 @@
 - 事件驱动（arrival / departure），每次仿真覆盖一周 [0,168)
 - 重复 n_runs 次（默认 1000），输出每周总等待时间的平均值
 
+"""
 import json
 import heapq
 import argparse
