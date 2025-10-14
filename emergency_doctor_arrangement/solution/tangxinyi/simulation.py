@@ -9,8 +9,6 @@
 - 事件驱动（arrival / departure），每次仿真覆盖一周 [0,168)
 - 重复 n_runs 次（默认 1000），输出每周总等待时间的平均值
 
-参考：用户提供的 C++ 仿真代码的事件驱动结构与到达生成逻辑（已简化）。:contentReference[oaicite:1]{index=1}
-"""
 import json
 import heapq
 import argparse
