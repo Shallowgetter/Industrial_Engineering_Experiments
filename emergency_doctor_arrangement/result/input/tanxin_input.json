@@ -1,0 +1,491 @@
+{
+  "arrival_rates": [
+    8.40, 5.49, 3.88, 4.00, 4.20, 6.73, 21.97, 43.76, 28.18, 25.38, 25.40, 23.26,
+    11.75, 11.20, 13.07, 19.45, 18.76, 19.69, 15.57, 29.39, 38.76, 31.66, 15.96, 9.61,
+    5.31, 3.16, 5.61, 1.94, 4.46, 7.56, 25.86, 39.92, 27.97, 27.90, 19.04, 17.43,
+    8.70, 19.26, 14.74, 16.07, 19.79, 13.16, 31.48, 33.67, 36.39, 21.99, 13.04, 7.73,
+    6.77, 4.28, 2.43, 1.73, 6.80, 4.62, 25.82, 44.01, 34.12, 18.63, 29.10, 14.03,
+    14.63, 16.32, 15.15, 22.69, 24.80, 30.30, 40.57, 37.47, 25.07, 17.95, 7.81, 9.71,
+    12.82, 6.17, 4.79, 3.90, 4.46, 6.26, 11.08, 33.77, 29.86, 13.26, 17.44, 19.74,
+    11.75, 19.83, 24.87, 11.01, 16.00, 15.43, 25.25, 33.21, 27.62, 18.60, 13.80, 8.71,
+    4.07, 7.36, 3.91, 3.08, 2.68, 9.09, 25.83, 47.81, 32.02, 22.54, 19.06, 14.15,
+    14.01, 18.07, 18.00, 13.12, 13.23, 13.56, 31.77, 32.72, 23.57, 15.18, 7.42, 8.33,
+    5.88, 6.25, 4.00, 7.01, 2.74, 8.51, 23.07, 42.15, 28.01, 20.17, 26.46, 14.40,
+    13.92, 18.19, 22.79, 16.89, 25.10, 21.46, 32.74, 23.43, 22.21, 16.04, 14.48, 10.71,
+    2.94, 3.12, 2.00, 3.50, 1.37, 4.26, 28.67, 49.35, 13.56, 24.03, 21.52, 13.27,
+    17.94, 22.97, 24.58, 28.18, 33.35, 34.37, 30.65, 31.58, 25.98, 13.93, 7.24, 5.35
+  ],
+  "mu": 6.0,
+  "c_borrow": 20.0,
+  "seed": 123,
+  "include_overtime_in_cost": false,
+  "doctors": [
+    {
+      "id": "D1",
+      "origin": "internal",
+      "shifts": [
+        {"start": 0, "end": 7, "tag": "night"},
+        {"start": 31, "end": 39, "tag": "day"},
+        {"start": 41, "end": 45, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 79, "end": 87, "tag": "day"},
+        {"start": 89, "end": 93, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 113, "end": 117, "tag": "day"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 161, "end": 165, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D2",
+      "origin": "internal",
+      "shifts": [
+        {"start": 0, "end": 7, "tag": "night"},
+        {"start": 31, "end": 39, "tag": "day"},
+        {"start": 41, "end": 45, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 79, "end": 87, "tag": "day"},
+        {"start": 89, "end": 93, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 113, "end": 117, "tag": "day"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 161, "end": 165, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D3",
+      "origin": "internal",
+      "shifts": [
+        {"start": 0, "end": 7, "tag": "night"},
+        {"start": 31, "end": 39, "tag": "day"},
+        {"start": 41, "end": 45, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 79, "end": 87, "tag": "day"},
+        {"start": 89, "end": 93, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 113, "end": 117, "tag": "day"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 161, "end": 165, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D4",
+      "origin": "internal",
+      "shifts": [
+        {"start": 0, "end": 7, "tag": "night"},
+        {"start": 31, "end": 39, "tag": "day"},
+        {"start": 41, "end": 45, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 79, "end": 87, "tag": "day"},
+        {"start": 89, "end": 93, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 113, "end": 117, "tag": "day"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 161, "end": 165, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D5",
+      "origin": "internal",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 17, "end": 21, "tag": "day"},
+        {"start": 31, "end": 39, "tag": "day"},
+        {"start": 41, "end": 45, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 79, "end": 87, "tag": "day"},
+        {"start": 89, "end": 93, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 113, "end": 117, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 137, "end": 141, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D6",
+      "origin": "internal",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 17, "end": 21, "tag": "day"},
+        {"start": 31, "end": 39, "tag": "day"},
+        {"start": 41, "end": 45, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 79, "end": 87, "tag": "day"},
+        {"start": 89, "end": 93, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 113, "end": 117, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 137, "end": 141, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D7",
+      "origin": "internal",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 17, "end": 21, "tag": "day"},
+        {"start": 31, "end": 39, "tag": "day"},
+        {"start": 41, "end": 45, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 80, "end": 88, "tag": "day"},
+        {"start": 90, "end": 94, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 114, "end": 118, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 137, "end": 141, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D8",
+      "origin": "internal",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 17, "end": 21, "tag": "day"},
+        {"start": 32, "end": 40, "tag": "day"},
+        {"start": 42, "end": 46, "tag": "day"},
+        {"start": 55, "end": 63, "tag": "day"},
+        {"start": 65, "end": 69, "tag": "day"},
+        {"start": 80, "end": 88, "tag": "day"},
+        {"start": 90, "end": 94, "tag": "day"},
+        {"start": 103, "end": 111, "tag": "day"},
+        {"start": 114, "end": 118, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 137, "end": 141, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D9",
+      "origin": "internal",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 17, "end": 21, "tag": "day"},
+        {"start": 32, "end": 40, "tag": "day"},
+        {"start": 42, "end": 46, "tag": "day"},
+        {"start": 56, "end": 64, "tag": "day"},
+        {"start": 66, "end": 70, "tag": "day"},
+        {"start": 81, "end": 89, "tag": "day"},
+        {"start": 91, "end": 95, "tag": "day"},
+        {"start": 104, "end": 112, "tag": "day"},
+        {"start": 114, "end": 118, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 137, "end": 141, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D10",
+      "origin": "internal",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 17, "end": 21, "tag": "day"},
+        {"start": 32, "end": 40, "tag": "day"},
+        {"start": 42, "end": 46, "tag": "day"},
+        {"start": 56, "end": 64, "tag": "day"},
+        {"start": 66, "end": 70, "tag": "day"},
+        {"start": 81, "end": 89, "tag": "day"},
+        {"start": 91, "end": 95, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 137, "end": 141, "tag": "day"}
+      ]
+    },
+    {
+      "id": "D11",
+      "origin": "internal",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 17, "end": 21, "tag": "day"},
+        {"start": 33, "end": 41, "tag": "day"},
+        {"start": 43, "end": 47, "tag": "day"},
+        {"start": 56, "end": 64, "tag": "day"},
+        {"start": 67, "end": 71, "tag": "day"},
+        {"start": 81, "end": 89, "tag": "day"},
+        {"start": 91, "end": 95, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 138, "end": 142, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B1",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 7, "end": 15, "tag": "day"},
+        {"start": 18, "end": 22, "tag": "day"},
+        {"start": 33, "end": 41, "tag": "day"},
+        {"start": 43, "end": 47, "tag": "day"},
+        {"start": 56, "end": 64, "tag": "day"},
+        {"start": 67, "end": 71, "tag": "day"},
+        {"start": 88, "end": 96, "tag": "day"},
+        {"start": 105, "end": 113, "tag": "day"},
+        {"start": 116, "end": 120, "tag": "day"},
+        {"start": 127, "end": 135, "tag": "day"},
+        {"start": 138, "end": 142, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B2",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 8, "end": 16, "tag": "day"},
+        {"start": 18, "end": 22, "tag": "day"},
+        {"start": 33, "end": 41, "tag": "day"},
+        {"start": 43, "end": 47, "tag": "day"},
+        {"start": 57, "end": 65, "tag": "day"},
+        {"start": 68, "end": 72, "tag": "day"},
+        {"start": 88, "end": 96, "tag": "day"},
+        {"start": 105, "end": 113, "tag": "day"},
+        {"start": 116, "end": 120, "tag": "day"},
+        {"start": 128, "end": 136, "tag": "day"},
+        {"start": 138, "end": 142, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B3",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 8, "end": 16, "tag": "day"},
+        {"start": 18, "end": 22, "tag": "day"},
+        {"start": 33, "end": 41, "tag": "day"},
+        {"start": 44, "end": 48, "tag": "day"},
+        {"start": 57, "end": 65, "tag": "day"},
+        {"start": 68, "end": 72, "tag": "day"},
+        {"start": 96, "end": 103, "tag": "night"},
+        {"start": 128, "end": 136, "tag": "day"},
+        {"start": 139, "end": 143, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B4",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 8, "end": 16, "tag": "day"},
+        {"start": 18, "end": 22, "tag": "day"},
+        {"start": 40, "end": 48, "tag": "day"},
+        {"start": 57, "end": 65, "tag": "day"},
+        {"start": 96, "end": 103, "tag": "night"},
+        {"start": 128, "end": 136, "tag": "day"},
+        {"start": 139, "end": 143, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B5",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 8, "end": 16, "tag": "day"},
+        {"start": 18, "end": 22, "tag": "day"},
+        {"start": 48, "end": 55, "tag": "night"},
+        {"start": 96, "end": 103, "tag": "night"},
+        {"start": 129, "end": 137, "tag": "day"},
+        {"start": 139, "end": 143, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B6",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 9, "end": 17, "tag": "day"},
+        {"start": 19, "end": 23, "tag": "day"},
+        {"start": 48, "end": 55, "tag": "night"},
+        {"start": 96, "end": 103, "tag": "night"},
+        {"start": 129, "end": 137, "tag": "day"},
+        {"start": 140, "end": 144, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B7",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 9, "end": 17, "tag": "day"},
+        {"start": 19, "end": 23, "tag": "day"},
+        {"start": 48, "end": 55, "tag": "night"},
+        {"start": 96, "end": 103, "tag": "night"},
+        {"start": 129, "end": 137, "tag": "day"},
+        {"start": 140, "end": 144, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B8",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 9, "end": 17, "tag": "day"},
+        {"start": 19, "end": 23, "tag": "day"},
+        {"start": 48, "end": 55, "tag": "night"},
+        {"start": 105, "end": 113, "tag": "day"},
+        {"start": 129, "end": 137, "tag": "day"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 161, "end": 165, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B9",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 9, "end": 17, "tag": "day"},
+        {"start": 20, "end": 24, "tag": "day"},
+        {"start": 48, "end": 55, "tag": "night"},
+        {"start": 120, "end": 127, "tag": "night"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 161, "end": 165, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B10",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 40, "end": 48, "tag": "day"},
+        {"start": 57, "end": 65, "tag": "day"},
+        {"start": 120, "end": 127, "tag": "night"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 162, "end": 166, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B11",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 24, "end": 31, "tag": "night"},
+        {"start": 57, "end": 65, "tag": "day"},
+        {"start": 120, "end": 127, "tag": "night"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 162, "end": 166, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B12",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 24, "end": 31, "tag": "night"},
+        {"start": 72, "end": 79, "tag": "night"},
+        {"start": 129, "end": 137, "tag": "day"},
+        {"start": 151, "end": 159, "tag": "day"},
+        {"start": 162, "end": 166, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B13",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 24, "end": 31, "tag": "night"},
+        {"start": 72, "end": 79, "tag": "night"},
+        {"start": 152, "end": 160, "tag": "day"},
+        {"start": 163, "end": 167, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B14",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 24, "end": 31, "tag": "night"},
+        {"start": 72, "end": 79, "tag": "night"},
+        {"start": 152, "end": 160, "tag": "day"},
+        {"start": 163, "end": 167, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B15",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 24, "end": 31, "tag": "night"},
+        {"start": 120, "end": 127, "tag": "night"},
+        {"start": 152, "end": 160, "tag": "day"},
+        {"start": 164, "end": 168, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B16",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 144, "end": 151, "tag": "night"}
+      ]
+    },
+    {
+      "id": "B17",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 144, "end": 151, "tag": "night"}
+      ]
+    },
+    {
+      "id": "B18",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 144, "end": 151, "tag": "night"}
+      ]
+    },
+    {
+      "id": "B19",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 144, "end": 151, "tag": "night"}
+      ]
+    },
+    {
+      "id": "B20",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 144, "end": 151, "tag": "night"}
+      ]
+    },
+    {
+      "id": "B21",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 152, "end": 160, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B22",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 152, "end": 160, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B23",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 153, "end": 161, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B24",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 153, "end": 161, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B25",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 153, "end": 161, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B26",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 153, "end": 161, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B27",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 153, "end": 161, "tag": "day"}
+      ]
+    },
+    {
+      "id": "B28",
+      "origin": "borrowed",
+      "shifts": [
+        {"start": 153, "end": 161, "tag": "day"}
+      ]
+    }
+  ]
+}
