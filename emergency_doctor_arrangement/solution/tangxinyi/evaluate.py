@@ -17,7 +17,7 @@ import argparse
 import re
 from pathlib import Path
 
-def run_simulation(sim_file: str, input_file: str, mu=4.0, runs=1000, seed=42):
+def run_simulation(sim_file: str, input_file: str, mu=6.0, runs=1000, seed=42):
     """运行 simulation.py 并返回输出文本"""
     cmd = [
         "python", sim_file,
@@ -75,9 +75,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=str, required=True, help="排班 JSON 文件路径（input.json）")
     parser.add_argument("--sim", type=str, required=True, help="simulation.py 文件路径")
-    parser.add_argument("--mu", type=float, default=4.0)
+    parser.add_argument("--mu", type=float, default=6.0)
     parser.add_argument("--runs", type=int, default=1000)
-    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--seed", type=int, default=123)
     args = parser.parse_args()
 
     # Step 1: 调用仿真

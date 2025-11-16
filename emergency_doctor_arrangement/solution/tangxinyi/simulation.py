@@ -226,8 +226,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--schedule", type=str, default="input.json",
                         help="D:\pycharm\Industrial_Engineering_Experiments\emergency_doctor_arrangement\result\input\input.json")
-    parser.add_argument("--mu", type=float, default=4.0, help="每位医生服务速率 μ（人/小时）")
-    parser.add_argument("--runs", type=int, default=5000, help="仿真重复次数（>=5000）")
+    parser.add_argument("--mu", type=float, default=6.0, help="每位医生服务速率 μ（人/小时）")
+    parser.add_argument("--runs", type=int, default=1000, help="仿真重复次数（>=1000）")
     parser.add_argument("--seed", type=int, default=42, help="随机种子")
     args = parser.parse_args()
 
