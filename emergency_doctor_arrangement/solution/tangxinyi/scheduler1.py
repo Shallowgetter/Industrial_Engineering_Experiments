@@ -38,8 +38,8 @@ BASE_DOCTORS = 11  # existing ED doctors
 MAX_NIGHT_PER_WEEK = 2
 
 # Random seed for reproducibility
-random.seed(42)
-np.random.seed(42)
+random.seed(123)
+np.random.seed(123)
 
 # -----------------------------
 # Utilities: time indexing
@@ -579,7 +579,7 @@ def export_schedule(best_team: List[DoctorSchedule], k_seconded: int, eval_res: 
                 "type": typ
             })
     df = pd.DataFrame.from_records(records)
-    df.to_csv("schedule.csv", index=False, encoding="utf-8-sig")
+    df.to_csv("schedule2.csv", index=False, encoding="utf-8-sig")
 
     # staffing summary
     staff = staffing_from_team(best_team)
@@ -589,7 +589,7 @@ def export_schedule(best_team: List[DoctorSchedule], k_seconded: int, eval_res: 
         rows.append({
             "day": d, "hour": h, "staff": int(staff[t]), "lambda": LAMBDA[t], "service_cap": mu * int(staff[t])
         })
-    pd.DataFrame(rows).to_csv("staffing_summary.csv", index=False, encoding="utf-8-sig")
+    pd.DataFrame(rows).to_csv("staffing_summary2.csv", index=False, encoding="utf-8-sig")
 
     summary = {
         "total_cost": eval_res["cost"],
@@ -602,7 +602,7 @@ def export_schedule(best_team: List[DoctorSchedule], k_seconded: int, eval_res: 
         "max_staff": int(np.max(staff)),
         "min_staff": int(np.min(staff))
     }
-    pd.DataFrame([summary]).to_csv("summary.csv", index=False, encoding="utf-8-sig")
+    pd.DataFrame([summary]).to_csv("summary2.csv", index=False, encoding="utf-8-sig")
     print("Saved schedule.csv, staffing_summary.csv, summary.csv")
 
 # -----------------------------
